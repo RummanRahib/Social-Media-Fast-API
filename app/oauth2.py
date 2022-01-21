@@ -7,7 +7,7 @@ from jose import JWTError, jwt
 from . import schemas
 from .config import settings
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # Secret key, algorithm, expiration time
 
@@ -27,6 +27,7 @@ def createAccessToken(data: dict):
 
 
 def verifyAccessToken(token: str, credentialsException):
+  # print("verifyAccessToken ", token)
   try:
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     
@@ -37,6 +38,7 @@ def verifyAccessToken(token: str, credentialsException):
     if id is None:
       raise credentialsException
     tokenData = schemas.TokenData(id = id)
+    # print(tokenData)
   except JWTError:
     raise credentialsException
   
@@ -47,5 +49,6 @@ def verifyAccessToken(token: str, credentialsException):
 
 def getCurrentUser(token: str = Depends(oauth2_scheme)):
   credentialsException = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+  # print('getCurrentUser ', token)
   
   return verifyAccessToken(token, credentialsException)

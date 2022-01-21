@@ -24,10 +24,10 @@ def login(userCredentials: OAuth2PasswordRequestForm = Depends(), db: Session = 
   
   # creating jwt token
   
-  accessToken = oauth2.createAccessToken(data={
+  access_token = oauth2.createAccessToken(data={
     "userId": user.id
   })
   return {
-    "accessToken": accessToken,
-    "token_type": "bearer"
+    "access_token": access_token,
+    "token_type": "Bearer"
   }

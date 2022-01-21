@@ -20,11 +20,17 @@ class CreatePost(PostBase):
 class CreateUser(BaseModel):
   email: EmailStr
   password: str
+  
+  class Config:
+    orm_mode = True
 
 
 class UserLogin(BaseModel):
   email: EmailStr
-  password: str  
+  password: str
+  
+  class Config:
+    orm_mode = True
 
 # Response model after creating an user
 
@@ -54,18 +60,30 @@ class ResponseModel(PostBase):
 class ResponseModelWithLike(BaseModel):
   Post: ResponseModel
   likes: int
+  
+  class Config:
+    orm_mode = True
 
 
 class Token(BaseModel):
-  accessToken: str
+  access_token: str
   token_type: str
+  
+  class Config:
+    orm_mode = True
   
   
 class TokenData(BaseModel):
   id: Optional[str] = None
+  
+  class Config:
+    orm_mode = True
 
 
 class Like(BaseModel):
   postId: int
   direction: conint(le=1)
+  
+  class Config:
+    orm_mode = True
 
